@@ -18,94 +18,69 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 
 /* Создаем главный класс программы, реализующий интерфейс ActionListener,
-который отвечает за обработку события нажатия на кнопку.*/
-public class Calculator implements ActionListener{
-	/* Создаем переменную id типа boolean, в которой хранится состояние авторизации
-	(если авторизация не пройдена, то значение переменной равно false,
-	в противном случае true).*/
-	private boolean id = false;
+который отвечает за обработку события нажатия на кнопку.
+*/
+public class CalcAuthorization implements ActionListener{
 	
-	/* Создаем метод, который изменяет значение
-    переменной id на значение, которое было
-	передано в параметрах метода.*/	
-	public void setStateId(boolean id) {
-		this.id = id;
-	}
-	
-	/* Создаем метод, который возвращает значение
-	переменной id при вызове.*/
-	public boolean getStateId() {
-		return id;
-	}
-	
-	/* Создаем объект главного окна с помощью ключевого слова new */
-    JFrame frame = new JFrame("Расчет количества символов в тексте");
+	/* Создаем объект окна авторизации с помощью ключевого слова new */
+    JFrame frameAut = new JFrame("Авторизация");
 	/* Создаем объект панели с метками */
-    JPanel panelLeft = new JPanel();
+    JPanel panelLeftAut = new JPanel();
 	/* Создаем объект панели с текстовыми полями */
-    JPanel panelRight = new JPanel();
+    JPanel panelRightAut = new JPanel();
 	/* Создаем объект панели с кнопками */
-    JPanel panelBottom = new JPanel();
+    JPanel panelBottomAut = new JPanel();
 	/* Создаем массив текстовых полей */
-    public JTextField[] fields = new JTextField[2];
+    public JTextField[] fieldsAut = new JTextField[2];
 
-    /* Добавляем конструктор класса */
-    public Calculator() {
-    	/* Для того, чтобы изменить цвет фона.
-    	panelLeft.setBackground(Color.red);
-    	panelRight.setBackground(Color.red);
-    	panelBottom.setBackground(Color.red);
-    	*/
+     /* Добавляем конструктор класса */
+    public CalcAuthorization() {
         /* Устанавливаем менеджер компоновки для панели с метками и выравнивание по вертикали */
-        panelLeft.setLayout(new BoxLayout(panelLeft, BoxLayout.Y_AXIS));
+        panelLeftAut.setLayout(new BoxLayout(panelLeftAut, BoxLayout.Y_AXIS));
         /* Устанавливаем размер панели с метками 250 на 300 пикселей */
-        panelLeft.setPreferredSize(new Dimension(250, 300));
+        panelLeftAut.setPreferredSize(new Dimension(250, 300));
+
         /* Устанавливаем менеджер компоновки для панели с текстовыми полями и выравнивание по вертикали */
-        panelRight.setLayout(new BoxLayout(panelRight, BoxLayout.Y_AXIS));
-        /* Устанавливаем размер панели с текстовыми полями 370 на 300 пикселей */
-        panelRight.setPreferredSize(new Dimension(370,300));
+        panelRightAut.setLayout(new BoxLayout(panelRightAut, BoxLayout.Y_AXIS));
+        /* Устанавливаем  размер 230 на 300 пикселей */
+        panelRightAut.setPreferredSize(new Dimension(230,300));
+
         /* Добавляем метки к текстовым полям через метод addLabel */
-        addLabel(panelLeft, "Текст:", Color.BLACK);
-        addLabel(panelLeft, "Количество символов в тексте:", Color.BLACK);
+        addLabel(panelLeftAut, "Логин:", Color.BLACK);
+        addLabel(panelLeftAut, "Пароль:", Color.BLACK);
         /* Добавляем текстовые поля через цикл и записываем их в массив */
-        for(int i = 0; i < fields.length; i++){
-            if(fields.length >= 0){
+        for(int i = 0; i < fieldsAut.length; i++){
+            if(fieldsAut.length >= 0){
                 /* Записываем ссылку из метода в массив для дальнейшей работы с текстовым полем */
-                fields[i] = addTextField(panelRight);}
+                fieldsAut[i] = addTextField(panelRightAut);}
         }
 
-        /* Добавляем кнопку расчета количества символов */
-        JButton calc = addButton(panelBottom, "Расчет символов");
-        /* Добавляем слушатель на событие нажатия кнопки расчета символов */
-        calc.addActionListener(this);
+        /* Добавляем кнопку подтверждения авторизации */
+        JButton signInAut = addButton(panelBottomAut, "Авторизоваться");
+        /* Добавляем слушатель на событие нажатия */
+        signInAut.addActionListener(this);
 		/* Добавляем кнопку сброса */
-        JButton reset = addButton(panelBottom, "Сброс");
-        /* Добавляем слушатель на событие нажатия кнопки сброса */
-        reset.addActionListener(this);
-		/* Добавляем кнопку авторизации */
-        JButton authorization = addButton(panelBottom, "Авторизация");
-        /* Добавляем слушатель на событие нажатия кнопки авторизации*/
-        authorization.addActionListener(this);
-        /* Добавляем кнопку расчета количества точек и запятых */
-        JButton punMarks = addButton(panelBottom, "Расчет точек и запятых");
-        /* Добавляем слушатель на событие нажатия кнопки расчета количества точек и запятых */
-        punMarks.addActionListener(this);
-        /* Делаем главное окно видимым */
-        frame.setVisible(true);
+        JButton resetAut = addButton(panelBottomAut, "Сброс");
+        /* Добавляем слушатель на событие нажатия */
+        resetAut.addActionListener(this);
+
+        /* Делаем окно авторизации видимым */
+        frameAut.setVisible(true);
         /* Устанавливаем действие при нажатии на крестик - завершение приложения */
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        /* Устанавливаем начальное положение главного окна относительно центра экрана (по центру) */
-        frame.setLocationRelativeTo(null);
-        /* Устанавливаем размер главного окна(600 на 200) */
-        frame.setSize(600,200);
-        /* Добавляем панель с метками на главное окно */
-        frame.add(panelLeft, BorderLayout.WEST);
-		/* Добавляем панель с текстовыми полями на главное окно */
-        frame.add(panelRight, BorderLayout.EAST);
-		/* Добавляем панель с кнопками на главное окно */
-        frame.add(panelBottom, BorderLayout.SOUTH);
-		/* Запрещаем изменение размеров главного окна */
-        frame.setResizable(false);
+        frameAut.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        /* Устанавливаем начальное положение окна авторизации относительно центра экрана (по центру) */
+        frameAut.setLocationRelativeTo(null);
+        /* Устанавливаем размер окна авторизации (450 на 200) */
+        frameAut.setSize(450,200);
+
+        /* Добавляем панель с метками на окно авторизации */
+        frameAut.add(panelLeftAut, BorderLayout.WEST);
+		/* Добавляем панель с текстовыми полями на окно авторизации */
+        frameAut.add(panelRightAut, BorderLayout.EAST);
+		/* Добавляем панель с кнопками на окно авторизации */
+        frameAut.add(panelBottomAut, BorderLayout.SOUTH);
+		/* Запрещаем изменение размеров окна авторизации */
+        frameAut.setResizable(false);
     }
 
     /* Метод добавления текстовых меток */
@@ -116,9 +91,6 @@ public class Calculator implements ActionListener{
         label.setMaximumSize(new Dimension(200,20));
         /* Устанавливаем цвета текста метки */
         label.setForeground(color);
-        /* Для того, чтобы изменить цвет рамки текстового поля
-        if (name == "") {label.setBackground(Color.red);}
-		*/
         /* Устанавливаем выравнивание метки по правому краю */
         label.setHorizontalAlignment(JLabel.RIGHT);
         /* Добавляем рамку вокруг метки */
@@ -127,3 +99,107 @@ public class Calculator implements ActionListener{
         container.add(label);
     }
 
+    /* Метод добавления текстовых полей */
+    public JTextField addTextField(JComponent container){
+        /* Создаем объект текстового поля */
+        JTextField field = new JTextField();
+        /* Устанавливаем максимально допустимый размер поля */
+        field.setMaximumSize(new Dimension(350,20));
+        /* Добавляем поле на панель */
+        container.add(field);
+        /* Возвращаем ссылку на текстовое поле */
+        return field;
+    }
+
+    /* Метод добавления кнопок */
+    public JButton addButton(JComponent container, String name){
+        /* Создаем объект кнопки */
+        JButton button = new JButton(name);
+        /* Устанавливаем максимально допустимый размер кнопки */
+        button.setMaximumSize(new Dimension(100,20));
+        /* Устанавливаем выравнивание по горизонтали (по центру) */
+        button.setHorizontalAlignment(JButton.CENTER);
+        /* Добавляем кнопку на панель */
+        container.add(button);
+        /* Возвращаем ссылку на кнопку */
+        return button;
+    }
+    
+    /* Метод прохождения авторизации */
+    public void signIn() throws Exception {
+		/* Записываем введенный текст из поля ввода логина в переменную */
+    	String login = fieldsAut[0].getText();
+		/* Записываем введенный текст из поля ввода пароля в переменную */
+    	String password = fieldsAut[1].getText();
+		/* Создаем массив, который содержит допустимые значения логина */
+    	String[] loginArray = {"Ard", "Bay", "Shay", "Step"};
+		/* Создаем массив, который содержит допустимые значения пароля */
+    	String[] passwordArray = {"17130470", "17130175", "17130180", "17130705"};
+    	
+		/* Выполняем проверку введенных логина и пароля через цикл for.
+		Если введенные значения совпадают со значениями в массивах,
+		проверка пройдена успешно и авторизация выполнена.
+		*/
+    	for (int i = 0; i < loginArray.length; i++) {
+    		if ((login.equals(loginArray[i])) && (password.equals(passwordArray[i]))) {
+				/* Создаем объект главного класса Calculator */
+        		Calculator calc = new Calculator();
+				/* Изменяем значение переменной id в главном классе */
+        		calc.setStateId(true);
+				/* Выводим сообщение об успешном прохождении процесса авторизации */
+        		JOptionPane.showMessageDialog(null, "Авторизация пройдена успешно");
+				/* Скрываем окно авторизации */
+        		frameAut.setVisible(false);
+        	}
+    	}
+    }
+    
+    /* С помощью аннотации @Override указываем, что
+	метод, следующий за аннотацией, будет переопределен.
+	*/	
+    @Override
+	/* Метод обработки события нажатия на кнопку */
+    public void actionPerformed(ActionEvent e) {
+        /* С помощью оператора if выполняем действие,
+		назначенное на ту кнопку, чье имя совпадаем со
+		строкой, которая передается в качестве параметра
+		встроенному методу equals.
+		*/
+        if (e.getActionCommand().equals("Авторизоваться")) {
+			/* Обработка исключения на случай возникновения ошибок
+			в процессе выполнения кода, записанного в боке try.
+			*/
+            try {
+                /* Запускаем метод авторизации */
+            	signIn();
+			/* Код, выполняемый при возникновении ошибок
+			в процессе выполнения кода из блока try.
+			*/
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Проверьте правильность ввода");
+            }
+        } else if (e.getActionCommand().equals("Сброс")) {
+            /* Очищаем все поля через цикл */
+            for(int i=0; i<fieldsAut.length; i++){
+                fieldsAut[i].setText("");
+            }
+        }
+    }
+    
+    /* Главный метод класса, запускающий процесс авторизации */
+    public void runAut() {
+		/* С помощью метода invokeLater запускаем асинхронную операцию,
+		которая сохраняет действие (Runnable), и запускает его на одной
+		из следующих итераций цикла сообщений.
+		*/
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+			/* Создаем метод, который запускает процесс авторизации
+			через конструктор класса.
+			*/
+            public void run() {
+                new CalcAuthorization();
+            }
+        });
+    }
+}
